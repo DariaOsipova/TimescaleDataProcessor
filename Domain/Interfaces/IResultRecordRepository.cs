@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic; // для <IEnumerable<ResultRecord>, коллекции, списки, словари
+using System.Collections.Generic; // РґР»СЏ <IEnumerable<ResultRecord>, РєРѕР»Р»РµРєС†РёРё, СЃРїРёСЃРєРё, СЃР»РѕРІР°СЂРё
 using System.Threading.Tasks;
 using Domain.Entities;
 
@@ -7,10 +7,10 @@ namespace Domain.Interfaces
 {
     public interface IResultRecordRepository
     {
-        Task<ResultRecord?> GetByFileNameAsync(string fileName); // параллельное выполнение задач
+        Task<ResultRecord?> GetByFileNameAsync(string fileName); // РїР°СЂР°Р»Р»РµР»СЊРЅРѕРµ РІС‹РїРѕР»РЅРµРЅРёРµ Р·Р°РґР°С‡
         Task AddAsync(ResultRecord result);
         Task UpdateAsync(ResultRecord result);
-        // метод фильтрации ищет записи ResultRecord по критериям(все критерии должны совпасть)
+        // РјРµС‚РѕРґ С„РёР»СЊС‚СЂР°С†РёРё РёС‰РµС‚ Р·Р°РїРёСЃРё ResultRecord РїРѕ РєСЂРёС‚РµСЂРёСЏРј(РІСЃРµ РєСЂРёС‚РµСЂРёРё РґРѕР»Р¶РЅС‹ СЃРѕРІРїР°СЃС‚СЊ)
         Task<IEnumerable<ResultRecord>> FilterAsync(string? fileName = null, DateTime? minDate = null,
                                                 DateTime? maxDate = null,
                                                 double? minAvgValue = null,

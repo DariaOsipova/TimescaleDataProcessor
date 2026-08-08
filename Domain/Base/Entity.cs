@@ -1,22 +1,22 @@
 using System;
 
 namespace Domain.Base
-{ // общий класс
+{ // РѕР±С‰РёР№ РєР»Р°СЃСЃ
 
     /// <typeparam name="TId">The type of the entity's ID.</typeparam>
-    public abstract class Entity<TId> // нельзя создать экземпляр, только наследование
+    public abstract class Entity<TId> // РЅРµР»СЊР·СЏ СЃРѕР·РґР°С‚СЊ СЌРєР·РµРјРїР»СЏСЂ, С‚РѕР»СЊРєРѕ РЅР°СЃР»РµРґРѕРІР°РЅРёРµ
         where TId : struct, IEquatable<TId>
     {
         public TId Id { get; protected set; }
 
         protected Entity(TId id)
-        { // IEquatable<TId>-TId должен поддерживать сравнение,struct-должен быть значимым типом (int, Guid, DateTime)
+        { // IEquatable<TId>-TId РґРѕР»Р¶РµРЅ РїРѕРґРґРµСЂР¶РёРІР°С‚СЊ СЃСЂР°РІРЅРµРЅРёРµ,struct-РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ Р·РЅР°С‡РёРјС‹Рј С‚РёРїРѕРј (int, Guid, DateTime)
             Id = id;
         }
 
         protected Entity()
         {
-            Id = default!; // !-Это точно не null(подавление предупреждений)
+            Id = default!; // !-Р­С‚Рѕ С‚РѕС‡РЅРѕ РЅРµ null(РїРѕРґР°РІР»РµРЅРёРµ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёР№)
         }
     }
 }

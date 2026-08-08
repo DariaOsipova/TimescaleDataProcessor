@@ -8,18 +8,18 @@ using WebAPI.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
-{ // CORS-политика безопасности, которая разрешает/запрещает запросы с других сайтов
-    options.AddPolicy("AllowAll", // AddPolicy("AllowAll")-Создаем политику с именем "AllowAll"
-     policy => { policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }); // Разрешаем запросы с любых сайтов
+{ // CORS-РїРѕР»РёС‚РёРєР° Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё, РєРѕС‚РѕСЂР°СЏ СЂР°Р·СЂРµС€Р°РµС‚/Р·Р°РїСЂРµС‰Р°РµС‚ Р·Р°РїСЂРѕСЃС‹ СЃ РґСЂСѓРіРёС… СЃР°Р№С‚РѕРІ
+    options.AddPolicy("AllowAll", // AddPolicy("AllowAll")-РЎРѕР·РґР°РµРј РїРѕР»РёС‚РёРєСѓ СЃ РёРјРµРЅРµРј "AllowAll"
+     policy => { policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }); // Р Р°Р·СЂРµС€Р°РµРј Р·Р°РїСЂРѕСЃС‹ СЃ Р»СЋР±С‹С… СЃР°Р№С‚РѕРІ
 });
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-// Настраивает генерацию Swagger документации,EnableAnnotations() включает поддержку аннотаций
+// РќР°СЃС‚СЂР°РёРІР°РµС‚ РіРµРЅРµСЂР°С†РёСЋ Swagger РґРѕРєСѓРјРµРЅС‚Р°С†РёРё,EnableAnnotations() РІРєР»СЋС‡Р°РµС‚ РїРѕРґРґРµСЂР¶РєСѓ Р°РЅРЅРѕС‚Р°С†РёР№
 builder.Services.AddSwaggerGen(c => { c.EnableAnnotations(); });
 
 var connectionString =
-    builder.Configuration.GetConnectionString("DefaultConnection") ?? //?? -Если GetConnectionString вернул null, используй значение по умолчанию
+    builder.Configuration.GetConnectionString("DefaultConnection") ?? //?? -Р•СЃР»Рё GetConnectionString РІРµСЂРЅСѓР» null, РёСЃРїРѕР»СЊР·СѓР№ Р·РЅР°С‡РµРЅРёРµ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
     "Host=localhost;Port=5432;Database=TimescaleDb;Username=postgres;Password=123456;";
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
@@ -41,19 +41,19 @@ using (var scope = app.Services.CreateScope())
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(); // инструмент для подготовки документации и тестирования API
+    app.UseSwagger(); // РёРЅСЃС‚СЂСѓРјРµРЅС‚ РґР»СЏ РїРѕРґРіРѕС‚РѕРІРєРё РґРѕРєСѓРјРµРЅС‚Р°С†РёРё Рё С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ API
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection(); // Автоматически перенаправляет HTTP запросы на HTTP
-app.UseAuthorization(); // Включает проверку авторизации (роли, права доступа)
+app.UseHttpsRedirection(); // РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРё РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµС‚ HTTP Р·Р°РїСЂРѕСЃС‹ РЅР° HTTP
+app.UseAuthorization(); // Р’РєР»СЋС‡Р°РµС‚ РїСЂРѕРІРµСЂРєСѓ Р°РІС‚РѕСЂРёР·Р°С†РёРё (СЂРѕР»Рё, РїСЂР°РІР° РґРѕСЃС‚СѓРїР°)
 
-app.UseCors("AllowAll"); // Применяет политику CORS с именем "AllowAll", которую мы настраивали ранее
+app.UseCors("AllowAll"); // РџСЂРёРјРµРЅСЏРµС‚ РїРѕР»РёС‚РёРєСѓ CORS СЃ РёРјРµРЅРµРј "AllowAll", РєРѕС‚РѕСЂСѓСЋ РјС‹ РЅР°СЃС‚СЂР°РёРІР°Р»Рё СЂР°РЅРµРµ
 
-app.UseMiddleware<ExceptionHandlingMiddleware>(); // Добавляет middleware для обработки исключений(ловит все исключения, Возвращает понятный ответ клиенту, Логирует ошибки)
+app.UseMiddleware<ExceptionHandlingMiddleware>(); // Р”РѕР±Р°РІР»СЏРµС‚ middleware РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё РёСЃРєР»СЋС‡РµРЅРёР№(Р»РѕРІРёС‚ РІСЃРµ РёСЃРєР»СЋС‡РµРЅРёСЏ, Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕРЅСЏС‚РЅС‹Р№ РѕС‚РІРµС‚ РєР»РёРµРЅС‚Сѓ, Р›РѕРіРёСЂСѓРµС‚ РѕС€РёР±РєРё)
 
-app.MapControllers(); // включить расписание для  API
-Console.WriteLine("        API ЗАПУЩЕН!");
+app.MapControllers(); // РІРєР»СЋС‡РёС‚СЊ СЂР°СЃРїРёСЃР°РЅРёРµ РґР»СЏ  API
+Console.WriteLine("        API Р—РђРџРЈР©Р•Рќ!");
 Console.WriteLine("SWAGGER: /swagger");
 
 app.Run();

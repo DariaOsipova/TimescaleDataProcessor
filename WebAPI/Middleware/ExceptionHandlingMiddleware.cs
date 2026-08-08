@@ -1,4 +1,4 @@
-﻿using System.Net; // HttpStatusCode-перечисление HTTP статусов
+using System.Net; // HttpStatusCode-перечисление HTTP статусов
 using System.Text.Json;
 using Domain.Exceptions;
 

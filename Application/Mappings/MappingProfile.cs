@@ -1,4 +1,4 @@
-﻿using AutoMapper; // преобразование объектов одного типа в другой
+using AutoMapper; // преобразование объектов одного типа в другой
 using Application.DTOs;
 using Domain.Entities;
 

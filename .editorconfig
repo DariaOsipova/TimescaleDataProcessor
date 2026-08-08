@@ -1,0 +1,29 @@
+root = true
+
+[*] # Применяет настройки ко всем файлам любого типа и расширения
+charset = utf-8
+end_of_line = crlf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true # удаляет лишние пробелы в конце строк
+
+[*.{cs,cshtml}]
+csharp_preferred_modifier_order = public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async
+# protected-член доступен внутри своего класса и в классах-наследниках (но не снаружи).
+# internal-член доступен только в пределах той же сборки (.dll/.exe), для других сборок он невидим.
+# extern-указывает, что метод реализован не в этом коде, а во внешней библиотеке (например, через P/Invoke для вызова WinAPI).
+# sealed-запрещает наследование класса или переопределение метода в наследниках (класс нельзя расширять, метод нельзя переопределить дальше).
+# override-переопределяет виртуальный или абстрактный метод из базового класса, заменяя его реализацию в наследнике.
+# unsafe-разрешает использование указателей и низкоуровневых операций с памятью в блоке кода
+# volatile-говорит компилятору и процессору, что поле может измениться в любой момент извне (например, из другого потока), поэтому его чтение/запись нельзя оптимизировать и кэшировать.
+# async-помечает метод как асинхронный, позволяя использовать await внутри него; такой метод возвращает Task или Task<T>.
+
+csharp_style_expression_bodied_methods = false
+csharp_style_expression_bodied_constructors = false
+csharp_style_expression_bodied_operators = false
+
+# Использование var
+csharp_style_var_for_built_in_types = true
+csharp_style_var_when_type_is_apparent = true
+csharp_style_var_elsewhere = true

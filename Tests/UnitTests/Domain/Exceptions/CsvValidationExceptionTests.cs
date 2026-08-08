@@ -5,12 +5,12 @@ namespace Tests.UnitTests.Domain.Exceptions
 {
     public class CsvValidationExceptionTests
     {
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public void Constructor_ShouldSetMessage()
         {
             var message = "Invalid CSV format";
             var exception = new CsvValidationException(message);
-            Assert.Equal(message, exception.Message); // проверяем что значения одинаковы
+            Assert.Equal(message, exception.Message); // РїСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ Р·РЅР°С‡РµРЅРёСЏ РѕРґРёРЅР°РєРѕРІС‹
         }
 
         [Fact]

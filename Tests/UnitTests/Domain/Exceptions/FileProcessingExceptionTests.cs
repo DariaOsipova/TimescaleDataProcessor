@@ -6,21 +6,21 @@ namespace Tests.UnitTests.Domain.Exceptions
 {
     public class FileProcessingExceptionTests
     {
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public void Constructor_ShouldSetMessage()
         {
             var message = "File processing failed";
 
             var exception = new FileProcessingException(message);
 
-            // Assert-проверка результата
-            Assert.Equal(message, exception.Message); // Equal - что значения одинаковы
-            Assert.Null(exception.InnerException); // внутреннее исключение,которое было причиной текущего исключения
+            // Assert-РїСЂРѕРІРµСЂРєР° СЂРµР·СѓР»СЊС‚Р°С‚Р°
+            Assert.Equal(message, exception.Message); // Equal - С‡С‚Рѕ Р·РЅР°С‡РµРЅРёСЏ РѕРґРёРЅР°РєРѕРІС‹
+            Assert.Null(exception.InnerException); // РІРЅСѓС‚СЂРµРЅРЅРµРµ РёСЃРєР»СЋС‡РµРЅРёРµ,РєРѕС‚РѕСЂРѕРµ Р±С‹Р»Рѕ РїСЂРёС‡РёРЅРѕР№ С‚РµРєСѓС‰РµРіРѕ РёСЃРєР»СЋС‡РµРЅРёСЏ
         }
 
         [Fact]
         public void Constructor_WithInnerException_ShouldSetBoth()
-        { // тест проверяет,что конструктор CsvValidationException правильно сохраняет и сообщение, внутреннее исключение
+        { // С‚РµСЃС‚ РїСЂРѕРІРµСЂСЏРµС‚,С‡С‚Рѕ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ CsvValidationException РїСЂР°РІРёР»СЊРЅРѕ СЃРѕС…СЂР°РЅСЏРµС‚ Рё СЃРѕРѕР±С‰РµРЅРёРµ, РІРЅСѓС‚СЂРµРЅРЅРµРµ РёСЃРєР»СЋС‡РµРЅРёРµ
           // Arrange
             var message = "File processing failed";
             var inner = new Exception("Inner exception");
@@ -33,7 +33,7 @@ namespace Tests.UnitTests.Domain.Exceptions
 
         [Fact]
         public void Constructor_WithNullInnerException_ShouldSetMessageOnly()
-        { // внутреннее исключение пустое
+        { // РІРЅСѓС‚СЂРµРЅРЅРµРµ РёСЃРєР»СЋС‡РµРЅРёРµ РїСѓСЃС‚РѕРµ
             var message = "File processing failed";
 
             var exception = new FileProcessingException(message, null);

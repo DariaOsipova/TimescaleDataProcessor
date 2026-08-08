@@ -1,9 +1,9 @@
 namespace Application.DTOs
 {
     public class UploadResultDto
-    { // сообщает клиенту, что произошло после загрузки файла
+    { // СЃРѕРѕР±С‰Р°РµС‚ РєР»РёРµРЅС‚Сѓ, С‡С‚Рѕ РїСЂРѕРёР·РѕС€Р»Рѕ РїРѕСЃР»Рµ Р·Р°РіСЂСѓР·РєРё С„Р°Р№Р»Р°
         public string FileName { get; set; } = string.Empty;
-        public int RecordsCount { get; set; } // количество записей, которое было обработано или найдено
+        public int RecordsCount { get; set; } // РєРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РїРёСЃРµР№, РєРѕС‚РѕСЂРѕРµ Р±С‹Р»Рѕ РѕР±СЂР°Р±РѕС‚Р°РЅРѕ РёР»Рё РЅР°Р№РґРµРЅРѕ
         public bool IsNewFile { get; set; }
     }
 }

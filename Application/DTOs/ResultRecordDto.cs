@@ -5,7 +5,7 @@ namespace Application.DTOs
     public class ResultRecordDto
     {
         public Guid Id { get; set; }
-        public string FileName { get; set; } = string.Empty; // инициализация свойства пустой строкой при создании объекта
+        public string FileName { get; set; } = string.Empty; // РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃРІРѕР№СЃС‚РІР° РїСѓСЃС‚РѕР№ СЃС‚СЂРѕРєРѕР№ РїСЂРё СЃРѕР·РґР°РЅРёРё РѕР±СЉРµРєС‚Р°
         public double DeltaTimeSeconds { get; set; }
         public DateTime MinDate { get; set; }
         public double AvgExecutionTime { get; set; }

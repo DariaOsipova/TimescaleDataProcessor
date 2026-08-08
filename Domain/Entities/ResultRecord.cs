@@ -3,22 +3,22 @@ using System;
 namespace Domain.Entities
 {
     public class ResultRecord
-    { // запись результата
+    { // Р·Р°РїРёСЃСЊ СЂРµР·СѓР»СЊС‚Р°С‚Р°
         public Guid Id { get; private set; }
         public string FileName { get; private set; }
         public double DeltaTimeSeconds { get; private set; }
         public DateTime MinDate { get; private set; }
         public double AvgExecutionTime { get; private set; }
         public double AvgValue { get; private set; }
-        public double MedianValue { get; private set; } // Значение в середине отсортированного списка
+        public double MedianValue { get; private set; } // Р—РЅР°С‡РµРЅРёРµ РІ СЃРµСЂРµРґРёРЅРµ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅРѕРіРѕ СЃРїРёСЃРєР°
         public double MaxValue { get; private set; }
         public double MinValue { get; private set; }
-        public DateTime ProcessedAt { get; private set; } // когда создан/обработан объект
+        public DateTime ProcessedAt { get; private set; } // РєРѕРіРґР° СЃРѕР·РґР°РЅ/РѕР±СЂР°Р±РѕС‚Р°РЅ РѕР±СЉРµРєС‚
 
         public ResultRecord(string fileName, double deltaTimeSeconds, DateTime minDate,
                             double avgExecutionTime, double avgValue, double medianValue,
                             double maxValue, double minValue)
-        { // констуктор-метод создания объекта
+        { // РєРѕРЅСЃС‚СѓРєС‚РѕСЂ-РјРµС‚РѕРґ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р°
             Id = Guid.NewGuid();
             FileName = fileName;
             DeltaTimeSeconds = deltaTimeSeconds;
@@ -31,7 +31,7 @@ namespace Domain.Entities
             ProcessedAt = DateTime.UtcNow;
         }
 
-        protected ResultRecord() { } // Entity Framework требует пустой конструктор для восстановления объектов из БД, метод используется внутри класса и наслденики
+        protected ResultRecord() { } // Entity Framework С‚СЂРµР±СѓРµС‚ РїСѓСЃС‚РѕР№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РѕР±СЉРµРєС‚РѕРІ РёР· Р‘Р”, РјРµС‚РѕРґ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІРЅСѓС‚СЂРё РєР»Р°СЃСЃР° Рё РЅР°СЃР»РґРµРЅРёРєРё
 
         public void Update(string fileName, double deltaTimeSeconds, DateTime minDate,
                        double avgExecutionTime, double avgValue, double medianValue,

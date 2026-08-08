@@ -2,7 +2,7 @@ namespace Tests
 {
     public class usings
     {
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public void Test1() { }
     }
 }

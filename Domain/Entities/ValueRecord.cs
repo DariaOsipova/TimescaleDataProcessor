@@ -3,11 +3,11 @@ using System;
 namespace Domain.Entities
 {
     public class ValueRecord
-    { // запись результата
+    { // Р·Р°РїРёСЃСЊ СЂРµР·СѓР»СЊС‚Р°С‚Р°
         public Guid Id { get; private set; }
         public DateTime Date { get; private set; }
         public double ExecutionTime { get; private set; }
-        public double Value { get; private set; } // анализируемое значение
+        public double Value { get; private set; } // Р°РЅР°Р»РёР·РёСЂСѓРµРјРѕРµ Р·РЅР°С‡РµРЅРёРµ
         public string FileName { get; private set; }
 
         public ValueRecord(DateTime date, double executionTime, double value, string fileName)
@@ -19,6 +19,6 @@ namespace Domain.Entities
             FileName = fileName;
         }
 
-        protected ValueRecord() { } // Entity Framework требует пустой конструктор для восстановления объектов из БД, метод используется внутри класса и наслденики
+        protected ValueRecord() { } // Entity Framework С‚СЂРµР±СѓРµС‚ РїСѓСЃС‚РѕР№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РѕР±СЉРµРєС‚РѕРІ РёР· Р‘Р”, РјРµС‚РѕРґ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІРЅСѓС‚СЂРё РєР»Р°СЃСЃР° Рё РЅР°СЃР»РґРµРЅРёРєРё
     }
 }

@@ -1,12 +1,12 @@
-using System.Collections.Generic; // Для IEnumerable<ResultRecordDto>
+using System.Collections.Generic; // Р”Р»СЏ IEnumerable<ResultRecordDto>
 using System.Threading.Tasks;
 using Application.DTOs;
 
 namespace Application.Interfaces
 {
     public interface IResultRecordService
-    { // определяет, какие операции доступны для работы с записями результатов
+    { // РѕРїСЂРµРґРµР»СЏРµС‚, РєР°РєРёРµ РѕРїРµСЂР°С†РёРё РґРѕСЃС‚СѓРїРЅС‹ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р·Р°РїРёСЃСЏРјРё СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ
         Task<IEnumerable<ResultRecordDto>> FilterAsync(FilterRequestDto filter);
-        // возвращаемый тип асинхронного метода, который возвращает коллекцию DTO (ResultRecordDto).
+        // РІРѕР·РІСЂР°С‰Р°РµРјС‹Р№ С‚РёРї Р°СЃРёРЅС…СЂРѕРЅРЅРѕРіРѕ РјРµС‚РѕРґР°, РєРѕС‚РѕСЂС‹Р№ РІРѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»Р»РµРєС†РёСЋ DTO (ResultRecordDto).
     }
 }

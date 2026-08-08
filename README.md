@@ -13,6 +13,7 @@ Moq-моки
 AutoMapper-маппинг DTO
 Swagger
 http://localhost:5211/swagger
+dotnet format-примпеняем правила форматирования, написанные в .editorconfig
 dotnet build -c Debug /p:DebugSymbols=true /p:DebugType=full
  Собирает данные о покрытии кода тестами
 dotnet-coverage collect "dotnet test Tests/Tests.csproj" -f cobertura -o coverage.xml

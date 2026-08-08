@@ -1,5 +1,5 @@
 using Xunit;
-using Microsoft.Extensions.DependencyInjection; //  Dependency Injection (DI)-внедрение зависимостей
+using Microsoft.Extensions.DependencyInjection; //  Dependency Injection (DI)-РІРЅРµРґСЂРµРЅРёРµ Р·Р°РІРёСЃРёРјРѕСЃС‚РµР№
 using Domain.Interfaces;
 using Infrastructure.Extensions;
 using Infrastructure.Data;
@@ -9,61 +9,61 @@ using System;
 
 namespace Tests.UnitTests.Infrastructure.Extensions
 {
-    public class ServiceCollectionExtensionsTests // коллекция расиширений
+    public class ServiceCollectionExtensionsTests // РєРѕР»Р»РµРєС†РёСЏ СЂР°СЃРёС€РёСЂРµРЅРёР№
     {
-        [Fact] // это тест
-        public void AddInfrastructure_ShouldRegisterRepositories() // должен регистрировать репозитории
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
+        public void AddInfrastructure_ShouldRegisterRepositories() // РґРѕР»Р¶РµРЅ СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ СЂРµРїРѕР·РёС‚РѕСЂРёРё
         {
             var services = new ServiceCollection();
 
-            // Регистрируем DbContext с InMemory
+            // Р РµРіРёСЃС‚СЂРёСЂСѓРµРј DbContext СЃ InMemory
             services.AddDbContext<AppDbContext>(options =>
                 options.UseInMemoryDatabase("TestDb"));
 
-            services.AddInfrastructure(); // Вызывает наш метод расширения, который регистрирует все репозитории
+            services.AddInfrastructure(); // Р’С‹Р·С‹РІР°РµС‚ РЅР°С€ РјРµС‚РѕРґ СЂР°СЃС€РёСЂРµРЅРёСЏ, РєРѕС‚РѕСЂС‹Р№ СЂРµРіРёСЃС‚СЂРёСЂСѓРµС‚ РІСЃРµ СЂРµРїРѕР·РёС‚РѕСЂРёРё
 
             var serviceProvider = services.BuildServiceProvider();
-            using var scope = serviceProvider.CreateScope(); // serviceProvider.CreateScope()-Создает новый Scope(область) для Scoped сервисов,
-                                                             // using var scope-Автоматически освободит ресурсы после теста
+            using var scope = serviceProvider.CreateScope(); // serviceProvider.CreateScope()-РЎРѕР·РґР°РµС‚ РЅРѕРІС‹Р№ Scope(РѕР±Р»Р°СЃС‚СЊ) РґР»СЏ Scoped СЃРµСЂРІРёСЃРѕРІ,
+                                                             // using var scope-РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРё РѕСЃРІРѕР±РѕРґРёС‚ СЂРµСЃСѓСЂСЃС‹ РїРѕСЃР»Рµ С‚РµСЃС‚Р°
 
-            var valueRepo = scope.ServiceProvider.GetService<IValueRecordRepository>(); // Запрашивает экземпляр репозитория из DI контейнера и сохраняет его в переменную
+            var valueRepo = scope.ServiceProvider.GetService<IValueRecordRepository>(); // Р—Р°РїСЂР°С€РёРІР°РµС‚ СЌРєР·РµРјРїР»СЏСЂ СЂРµРїРѕР·РёС‚РѕСЂРёСЏ РёР· DI РєРѕРЅС‚РµР№РЅРµСЂР° Рё СЃРѕС…СЂР°РЅСЏРµС‚ РµРіРѕ РІ РїРµСЂРµРјРµРЅРЅСѓСЋ
             var resultRepo = scope.ServiceProvider.GetService<IResultRecordRepository>();
-            // DEPENDENCY INJECTION-паттерн проектирования, при котором объекты не создают свои зависимости сами, а получают их извне
-            Assert.NotNull(valueRepo); // проверяем,что объект не равен null
-            Assert.IsType<ValueRecordRepository>(valueRepo); // проверяем,что объект ялвяется экземпляром указанного типа
+            // DEPENDENCY INJECTION-РїР°С‚С‚РµСЂРЅ РїСЂРѕРµРєС‚РёСЂРѕРІР°РЅРёСЏ, РїСЂРё РєРѕС‚РѕСЂРѕРј РѕР±СЉРµРєС‚С‹ РЅРµ СЃРѕР·РґР°СЋС‚ СЃРІРѕРё Р·Р°РІРёСЃРёРјРѕСЃС‚Рё СЃР°РјРё, Р° РїРѕР»СѓС‡Р°СЋС‚ РёС… РёР·РІРЅРµ
+            Assert.NotNull(valueRepo); // РїСЂРѕРІРµСЂСЏРµРј,С‡С‚Рѕ РѕР±СЉРµРєС‚ РЅРµ СЂР°РІРµРЅ null
+            Assert.IsType<ValueRecordRepository>(valueRepo); // РїСЂРѕРІРµСЂСЏРµРј,С‡С‚Рѕ РѕР±СЉРµРєС‚ СЏР»РІСЏРµС‚СЃСЏ СЌРєР·РµРјРїР»СЏСЂРѕРј СѓРєР°Р·Р°РЅРЅРѕРіРѕ С‚РёРїР°
             Assert.NotNull(resultRepo);
             Assert.IsType<ResultRecordRepository>(resultRepo);
         }
 
-        [Fact] // это тест проверяет конфигурацию
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚ РїСЂРѕРІРµСЂСЏРµС‚ РєРѕРЅС„РёРіСѓСЂР°С†РёСЋ
         public void AddInfrastructure_ShouldRegisterRepositories_WithScopedLifetime()
         {
-            var services = new ServiceCollection(); // Создает пустой DI контейнер
-            // Регистрируем DbContext с InMemory
+            var services = new ServiceCollection(); // РЎРѕР·РґР°РµС‚ РїСѓСЃС‚РѕР№ DI РєРѕРЅС‚РµР№РЅРµСЂ
+            // Р РµРіРёСЃС‚СЂРёСЂСѓРµРј DbContext СЃ InMemory
             services.AddDbContext<AppDbContext>(options =>
                 options.UseInMemoryDatabase("TestDb"));
 
-            services.AddInfrastructure(); // Вызывает наш метод расширения, который регистрирует все репозитории
-            // поиск информации о регистрации сервиса в DI контейнере
+            services.AddInfrastructure(); // Р’С‹Р·С‹РІР°РµС‚ РЅР°С€ РјРµС‚РѕРґ СЂР°СЃС€РёСЂРµРЅРёСЏ, РєРѕС‚РѕСЂС‹Р№ СЂРµРіРёСЃС‚СЂРёСЂСѓРµС‚ РІСЃРµ СЂРµРїРѕР·РёС‚РѕСЂРёРё
+            // РїРѕРёСЃРє РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЂРµРіРёСЃС‚СЂР°С†РёРё СЃРµСЂРІРёСЃР° РІ DI РєРѕРЅС‚РµР№РЅРµСЂРµ
             var valueRepoDescriptor = services.FirstOrDefault(s => s.ServiceType == typeof(IValueRecordRepository));
             var resultRepoDescriptor = services.FirstOrDefault(s => s.ServiceType == typeof(IResultRecordRepository));
 
-            Assert.NotNull(valueRepoDescriptor); // проверяем,что объект не равен null
+            Assert.NotNull(valueRepoDescriptor); // РїСЂРѕРІРµСЂСЏРµРј,С‡С‚Рѕ РѕР±СЉРµРєС‚ РЅРµ СЂР°РІРµРЅ null
             Assert.NotNull(resultRepoDescriptor);
-            //  проверка,что жизненный цикл зарегистрированного сервиса равен Scoped(когда объект живет в рамках одной области)
+            //  РїСЂРѕРІРµСЂРєР°,С‡С‚Рѕ Р¶РёР·РЅРµРЅРЅС‹Р№ С†РёРєР» Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅРЅРѕРіРѕ СЃРµСЂРІРёСЃР° СЂР°РІРµРЅ Scoped(РєРѕРіРґР° РѕР±СЉРµРєС‚ Р¶РёРІРµС‚ РІ СЂР°РјРєР°С… РѕРґРЅРѕР№ РѕР±Р»Р°СЃС‚Рё)
             Assert.Equal(ServiceLifetime.Scoped, valueRepoDescriptor.Lifetime);
             Assert.Equal(ServiceLifetime.Scoped, resultRepoDescriptor.Lifetime);
         }
 
         [Fact]
-        public void AddInfrastructure_ShouldRegisterDbContext() //  тест проверяет, что DbContext зарегистрирован в DI(внедрение зависимостей) контейнере
+        public void AddInfrastructure_ShouldRegisterDbContext() //  С‚РµСЃС‚ РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ DbContext Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅ РІ DI(РІРЅРµРґСЂРµРЅРёРµ Р·Р°РІРёСЃРёРјРѕСЃС‚РµР№) РєРѕРЅС‚РµР№РЅРµСЂРµ
         {
-            var services = new ServiceCollection(); // Создает пустой DI контейнер
+            var services = new ServiceCollection(); // РЎРѕР·РґР°РµС‚ РїСѓСЃС‚РѕР№ DI РєРѕРЅС‚РµР№РЅРµСЂ
 
             services.AddDbContext<AppDbContext>(options =>
-                options.UseInMemoryDatabase("TestDb")); // Регистрируем DbContext с InMemory
+                options.UseInMemoryDatabase("TestDb")); // Р РµРіРёСЃС‚СЂРёСЂСѓРµРј DbContext СЃ InMemory
 
-            services.AddInfrastructure(); // Вызывает наш метод расширения, который регистрирует все репозитории
+            services.AddInfrastructure(); // Р’С‹Р·С‹РІР°РµС‚ РЅР°С€ РјРµС‚РѕРґ СЂР°СЃС€РёСЂРµРЅРёСЏ, РєРѕС‚РѕСЂС‹Р№ СЂРµРіРёСЃС‚СЂРёСЂСѓРµС‚ РІСЃРµ СЂРµРїРѕР·РёС‚РѕСЂРёРё
 
             var dbContextDescriptor = services.FirstOrDefault(s => s.ServiceType == typeof(AppDbContext));
             Assert.NotNull(dbContextDescriptor);

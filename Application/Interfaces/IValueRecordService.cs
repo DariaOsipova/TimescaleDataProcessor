@@ -1,13 +1,13 @@
-using System.Collections.Generic; // для IEnumerable<ValueRecordDto>
+using System.Collections.Generic; // РґР»СЏ IEnumerable<ValueRecordDto>
 using System.Threading.Tasks;
 using Application.DTOs;
-using Microsoft.AspNetCore.Http; // IFormFile-интерфейс представляет загруженный файл в ASP.NET Core
+using Microsoft.AspNetCore.Http; // IFormFile-РёРЅС‚РµСЂС„РµР№СЃ РїСЂРµРґСЃС‚Р°РІР»СЏРµС‚ Р·Р°РіСЂСѓР¶РµРЅРЅС‹Р№ С„Р°Р№Р» РІ ASP.NET Core
 
 namespace Application.Interfaces
 {
     public interface IValueRecordService
     {
-        Task<UploadResultDto> ProcessCsvAsync(IFormFile file); //  для ответа на загрузку файла
+        Task<UploadResultDto> ProcessCsvAsync(IFormFile file); //  РґР»СЏ РѕС‚РІРµС‚Р° РЅР° Р·Р°РіСЂСѓР·РєСѓ С„Р°Р№Р»Р°
         Task<IEnumerable<ValueRecordDto>> GetLast10ValuesByFileNameAsync(string fileName);
     }
 }

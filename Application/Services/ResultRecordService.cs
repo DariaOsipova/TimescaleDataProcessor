@@ -1,32 +1,32 @@
-using System.Collections.Generic; // для IEnumerable<ResultRecordDto>
-using System.Linq; // для работы с запросами
+using System.Collections.Generic; // РґР»СЏ IEnumerable<ResultRecordDto>
+using System.Linq; // РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р·Р°РїСЂРѕСЃР°РјРё
 using System.Threading.Tasks;
 using Application.DTOs;
 using Application.Interfaces;
-using AutoMapper; // установление соответствия между элементами разных структур данных
+using AutoMapper; // СѓСЃС‚Р°РЅРѕРІР»РµРЅРёРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёСЏ РјРµР¶РґСѓ СЌР»РµРјРµРЅС‚Р°РјРё СЂР°Р·РЅС‹С… СЃС‚СЂСѓРєС‚СѓСЂ РґР°РЅРЅС‹С…
 using Domain.Interfaces;
 
 namespace Application.Services
 {
     public class ResultRecordService : IResultRecordService
-    { // запись, объявленный класс реализует интерфейс : IResultRecordService
-        private readonly IResultRecordRepository _repository; // IResultRecordRepository=интерфейс репозитория
+    { // Р·Р°РїРёСЃСЊ, РѕР±СЉСЏРІР»РµРЅРЅС‹Р№ РєР»Р°СЃСЃ СЂРµР°Р»РёР·СѓРµС‚ РёРЅС‚РµСЂС„РµР№СЃ : IResultRecordService
+        private readonly IResultRecordRepository _repository; // IResultRecordRepository=РёРЅС‚РµСЂС„РµР№СЃ СЂРµРїРѕР·РёС‚РѕСЂРёСЏ
         private readonly IMapper _mapper;
 
-        // конструктор класса,присваивает значения полям при создании объекта
+        // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°,РїСЂРёСЃРІР°РёРІР°РµС‚ Р·РЅР°С‡РµРЅРёСЏ РїРѕР»СЏРј РїСЂРё СЃРѕР·РґР°РЅРёРё РѕР±СЉРµРєС‚Р°
         public ResultRecordService(IResultRecordRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
-        // IEnumerable-интерфейс-коллекция объектов,которую можно перебирать
+        // IEnumerable-РёРЅС‚РµСЂС„РµР№СЃ-РєРѕР»Р»РµРєС†РёСЏ РѕР±СЉРµРєС‚РѕРІ,РєРѕС‚РѕСЂСѓСЋ РјРѕР¶РЅРѕ РїРµСЂРµР±РёСЂР°С‚СЊ
         public async Task<IEnumerable<ResultRecordDto>> FilterAsync(FilterRequestDto filter)
-        { // DTO для передачи данных клиенту
-            var results = await _repository.FilterAsync( // паралелльно фильтрием
+        { // DTO РґР»СЏ РїРµСЂРµРґР°С‡Рё РґР°РЅРЅС‹С… РєР»РёРµРЅС‚Сѓ
+            var results = await _repository.FilterAsync( // РїР°СЂР°Р»РµР»Р»СЊРЅРѕ С„РёР»СЊС‚СЂРёРµРј
           filter.FileName, filter.MinDate, filter.MaxDate, filter.MinAvgValue, filter.MaxAvgValue,
           filter.MinAvgExecutionTime, filter.MaxAvgExecutionTime);
 
-            return _mapper.Map<IEnumerable<ResultRecordDto>>(results); // метод map у объекта _mapper передает аргумент results
+            return _mapper.Map<IEnumerable<ResultRecordDto>>(results); // РјРµС‚РѕРґ map Сѓ РѕР±СЉРµРєС‚Р° _mapper РїРµСЂРµРґР°РµС‚ Р°СЂРіСѓРјРµРЅС‚ results
         }
     }
 }

@@ -5,8 +5,8 @@ using Infrastructure.Data;
 using Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq; // Single()-проверка кол-ва
-using System.Threading.Tasks; // использование коллекций(List)
+using System.Linq; // Single()-РїСЂРѕРІРµСЂРєР° РєРѕР»-РІР°
+using System.Threading.Tasks; // РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ РєРѕР»Р»РµРєС†РёР№(List)
 
 namespace Tests.UnitTests.Infrastructure.Repositories
 {
@@ -15,20 +15,20 @@ namespace Tests.UnitTests.Infrastructure.Repositories
         private AppDbContext GetDbContext()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                              .UseInMemoryDatabase(Guid.NewGuid().ToString()) // каждый тест получает свою чистую уникальную бд
+                              .UseInMemoryDatabase(Guid.NewGuid().ToString()) // РєР°Р¶РґС‹Р№ С‚РµСЃС‚ РїРѕР»СѓС‡Р°РµС‚ СЃРІРѕСЋ С‡РёСЃС‚СѓСЋ СѓРЅРёРєР°Р»СЊРЅСѓСЋ Р±Рґ
                               .Options;
             return new AppDbContext(options);
         }
 
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public async Task AddRangeAsync_ShouldSaveRecords()
         {
-            var context = GetDbContext(); // получаем объект для работы с БД
-            var repo = new ValueRecordRepository(context); // создаем репозиторий для работы с БД
+            var context = GetDbContext(); // РїРѕР»СѓС‡Р°РµРј РѕР±СЉРµРєС‚ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
+            var repo = new ValueRecordRepository(context); // СЃРѕР·РґР°РµРј СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
             var records =
-                new List<ValueRecord> { new ValueRecord(DateTime.UtcNow, 1.5, 10.0, "test.csv") }; // 1.5-Время выполнения,10-значение
+                new List<ValueRecord> { new ValueRecord(DateTime.UtcNow, 1.5, 10.0, "test.csv") }; // 1.5-Р’СЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ,10-Р·РЅР°С‡РµРЅРёРµ
 
-            // асинхронный значит поток не блокируется во время выполнения операции с БД
+            // Р°СЃРёРЅС…СЂРѕРЅРЅС‹Р№ Р·РЅР°С‡РёС‚ РїРѕС‚РѕРє РЅРµ Р±Р»РѕРєРёСЂСѓРµС‚СЃСЏ РІРѕ РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё СЃ Р‘Р”
             await repo.AddRangeAsync(records);
 
             var saved = await context.ValueRecords.ToListAsync();
@@ -36,16 +36,16 @@ namespace Tests.UnitTests.Infrastructure.Repositories
             Assert.Equal("test.csv", saved.First().FileName);
         }
 
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public async Task GetLast10ByFileNameAsync_ShouldReturnLast10()
         {
-            var context = GetDbContext(); // получаем объект для работы с БД
-            var repo = new ValueRecordRepository(context); // создаем репозиторий для работы с БД
+            var context = GetDbContext(); // РїРѕР»СѓС‡Р°РµРј РѕР±СЉРµРєС‚ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
+            var repo = new ValueRecordRepository(context); // СЃРѕР·РґР°РµРј СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
             var now = DateTime.UtcNow;
 
             for (int i = 0; i < 15; i++)
             {
-                context.ValueRecords.Add(new ValueRecord(now.AddMinutes(i), i * 0.5, i * 10, "test.csv")); // i*0.5 для ExecutionTime,i * 10-для value
+                context.ValueRecords.Add(new ValueRecord(now.AddMinutes(i), i * 0.5, i * 10, "test.csv")); // i*0.5 РґР»СЏ ExecutionTime,i * 10-РґР»СЏ value
             }
             await context.SaveChangesAsync();
 
@@ -57,16 +57,16 @@ namespace Tests.UnitTests.Infrastructure.Repositories
             Assert.Equal(now.AddMinutes(5), result.Last().Date);
         }
 
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public async Task DeleteByFileNameAsync_ShouldDeleteAllRecords()
         {
-            var context = GetDbContext(); // получаем объект для работы с БД
-            var repo = new ValueRecordRepository(context); // создаем репозиторий для работы с БД
+            var context = GetDbContext(); // РїРѕР»СѓС‡Р°РµРј РѕР±СЉРµРєС‚ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
+            var repo = new ValueRecordRepository(context); // СЃРѕР·РґР°РµРј СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
 
             for (int i = 0; i < 5; i++)
             {
                 context.ValueRecords.Add(
-                    new ValueRecord(DateTime.UtcNow.AddMinutes(i), i * 0.5, i * 10, "test.csv")); // i*0.5 для ExecutionTime,i * 10-для value
+                    new ValueRecord(DateTime.UtcNow.AddMinutes(i), i * 0.5, i * 10, "test.csv")); // i*0.5 РґР»СЏ ExecutionTime,i * 10-РґР»СЏ value
             }
             await context.SaveChangesAsync();
 
@@ -76,22 +76,22 @@ namespace Tests.UnitTests.Infrastructure.Repositories
             Assert.Empty(remaining);
         }
 
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public async Task DeleteByFileNameAsync_WithNoRecords_ShouldNotThrow()
-        { // проверяем,что метод не выбрасывает исключение,даже если файла не существует
-            var context = GetDbContext(); // получаем объект для работы с БД
-            var repo = new ValueRecordRepository(context); // создаем репозиторий для работы с БД
+        { // РїСЂРѕРІРµСЂСЏРµРј,С‡С‚Рѕ РјРµС‚РѕРґ РЅРµ РІС‹Р±СЂР°СЃС‹РІР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ,РґР°Р¶Рµ РµСЃР»Рё С„Р°Р№Р»Р° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚
+            var context = GetDbContext(); // РїРѕР»СѓС‡Р°РµРј РѕР±СЉРµРєС‚ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
+            var repo = new ValueRecordRepository(context); // СЃРѕР·РґР°РµРј СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
 
             await repo.DeleteByFileNameAsync("nonexistent.csv");
             var records = await context.ValueRecords.ToListAsync();
             Assert.Empty(records);
         }
 
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public async Task GetByFileNameAsync_ShouldReturnCorrectRecords()
         {
-            var context = GetDbContext(); // получаем объект для работы с БД
-            var repo = new ValueRecordRepository(context); // создаем репозиторий для работы с БД
+            var context = GetDbContext(); // РїРѕР»СѓС‡Р°РµРј РѕР±СЉРµРєС‚ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
+            var repo = new ValueRecordRepository(context); // СЃРѕР·РґР°РµРј СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
 
             context.ValueRecords.Add(new ValueRecord(DateTime.UtcNow, 1.0, 10.0, "file1.csv")); // ExecutionTime,Value,FileName
             context.ValueRecords.Add(
@@ -102,7 +102,7 @@ namespace Tests.UnitTests.Infrastructure.Repositories
 
             var result = await repo.GetByFileNameAsync("file1.csv");
 
-            Assert.Equal(2, result.Count()); // Проверяем равенство
+            Assert.Equal(2, result.Count()); // РџСЂРѕРІРµСЂСЏРµРј СЂР°РІРµРЅСЃС‚РІРѕ
             Assert.All(result, r => Assert.Equal("file1.csv", r.FileName));
         }
     }

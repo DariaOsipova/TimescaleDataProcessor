@@ -6,11 +6,11 @@ namespace Tests.UnitTests.Domain.Entities
 {
     public class ResultRecordTests
     {
-        [Fact] // ýòî òåñò
+        [Fact] // ÑÑ‚Ð¾ Ñ‚ÐµÑÑ‚
         public void Constructor_ShouldSetPropertiesCorrectly()
         {
             var fileName = "test.csv";
-            var deltaTime = 120.5; // ðàçíèöà âî âðåìåíè ìåæäó ñàìîé ðàííåé è ñàìîé ïîçäíåé äàòîé â äàííûõ
+            var deltaTime = 120.5; // Ñ€Ð°Ð·Ð½Ð¸Ñ†Ð° Ð²Ð¾ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸ Ð¼ÐµÐ¶Ð´Ñƒ ÑÐ°Ð¼Ð¾Ð¹ Ñ€Ð°Ð½Ð½ÐµÐ¹ Ð¸ ÑÐ°Ð¼Ð¾Ð¹ Ð¿Ð¾Ð·Ð´Ð½ÐµÐ¹ Ð´Ð°Ñ‚Ð¾Ð¹ Ð² Ð´Ð°Ð½Ð½Ñ‹Ñ…
             var minDate = new DateTime(2024, 1, 1, 10, 0, 0, DateTimeKind.Utc);
             var avgExecutionTime = 2.5;
             var avgValue = 25.0;
@@ -18,13 +18,13 @@ namespace Tests.UnitTests.Domain.Entities
             var maxValue = 30.0;
             var minValue = 10.0;
 
-            // // ñîçäàíèå îáúåêòà
+            // // ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ð°
             var record = new ResultRecord(fileName, deltaTime, minDate, avgExecutionTime, avgValue,
                                           medianValue, maxValue, minValue);
 
-            // Assert--ïðîâåðêà ðåçóëüòàòà
+            // Assert--Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚Ð°
             Assert.NotEqual(Guid.Empty, record.Id);
-            Assert.Equal(fileName, record.FileName); // ïðîâåðÿåì ÷òî çíà÷åíèÿ îäèíàêîâû
+            Assert.Equal(fileName, record.FileName); // Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ Ñ‡Ñ‚Ð¾ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ Ð¾Ð´Ð¸Ð½Ð°ÐºÐ¾Ð²Ñ‹
             Assert.Equal(deltaTime, record.DeltaTimeSeconds);
             Assert.Equal(minDate, record.MinDate);
             Assert.Equal(avgExecutionTime, record.AvgExecutionTime);
@@ -37,7 +37,7 @@ namespace Tests.UnitTests.Domain.Entities
 
         [Fact]
         public void Update_ShouldChangeAllProperties()
-        { // òåñò ïðîâåðÿåò,÷òî ìåòîä Update èçìåíÿåò âñå ñâîéñòâà îáúåêòà ResultRecord
+        { // Ñ‚ÐµÑÑ‚ Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÑ‚,Ñ‡Ñ‚Ð¾ Ð¼ÐµÑ‚Ð¾Ð´ Update Ð¸Ð·Ð¼ÐµÐ½ÑÐµÑ‚ Ð²ÑÐµ ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð° Ð¾Ð±ÑŠÐµÐºÑ‚Ð° ResultRecord
           // Arrange
             var record = new ResultRecord("old.csv", 60, DateTime.UtcNow, 2.0, 20.0, 20.0, 30.0, 10.0);
             var newFileName = "new.csv";
@@ -60,7 +60,7 @@ namespace Tests.UnitTests.Domain.Entities
             Assert.Equal(newMedianValue, record.MedianValue);
             Assert.Equal(newMaxValue, record.MaxValue);
             Assert.Equal(newMinValue, record.MinValue);
-            //ïðîâåðêà, ÷òî ñâîéñòâî ProcessedAt áûëî óñòàíîâëåíî íà òåêóùåå âðåìÿ(ñ äîïóñòèìîé ïîãðåøíîñòüþ â 1 ñåêóíäó
+            //Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ°, Ñ‡Ñ‚Ð¾ ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð¾ ProcessedAt Ð±Ñ‹Ð»Ð¾ ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð»ÐµÐ½Ð¾ Ð½Ð° Ñ‚ÐµÐºÑƒÑ‰ÐµÐµ Ð²Ñ€ÐµÐ¼Ñ(Ñ Ð´Ð¾Ð¿ÑƒÑÑ‚Ð¸Ð¼Ð¾Ð¹ Ð¿Ð¾Ð³Ñ€ÐµÑˆÐ½Ð¾ÑÑ‚ÑŒÑŽ Ð² 1 ÑÐµÐºÑƒÐ½Ð´Ñƒ
             Assert.True(record.ProcessedAt >= DateTime.UtcNow.AddSeconds(-1));
         }
     }

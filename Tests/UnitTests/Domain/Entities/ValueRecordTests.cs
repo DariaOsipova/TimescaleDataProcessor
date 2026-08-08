@@ -6,7 +6,7 @@ namespace Tests.UnitTests.Domain.Entities
 {
     public class ValueRecordTests
     {
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public void Constructor_ShouldSetPropertiesCorrectly()
         {
             var date = new DateTime(2024, 1, 1, 10, 0, 0, DateTimeKind.Utc);
@@ -14,19 +14,19 @@ namespace Tests.UnitTests.Domain.Entities
             var value = 10.0;
             var fileName = "test.csv";
 
-            // создание объекта
+            // СЃРѕР·РґР°РЅРёРµ РѕР±СЉРµРєС‚Р°
             var record = new ValueRecord(date, executionTime, value, fileName);
 
-            // Assert-проверка результата
+            // Assert-РїСЂРѕРІРµСЂРєР° СЂРµР·СѓР»СЊС‚Р°С‚Р°
             Assert.NotEqual(Guid.Empty, record.Id);
-            Assert.Equal(date, record.Date); // проверяем что значения одинаковы
+            Assert.Equal(date, record.Date); // РїСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ Р·РЅР°С‡РµРЅРёСЏ РѕРґРёРЅР°РєРѕРІС‹
             Assert.Equal(executionTime, record.ExecutionTime);
             Assert.Equal(value, record.Value);
             Assert.Equal(fileName, record.FileName);
         }
 
         [Fact]
-        // тест проверяет, что конструктор ValueRecord правильно устанавливает свойства с разными (крайними) значениями
+        // С‚РµСЃС‚ РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ ValueRecord РїСЂР°РІРёР»СЊРЅРѕ СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРІРѕР№СЃС‚РІР° СЃ СЂР°Р·РЅС‹РјРё (РєСЂР°Р№РЅРёРјРё) Р·РЅР°С‡РµРЅРёСЏРјРё
         public void Constructor_WithDifferentValues_ShouldSetProperties()
         {
             // Arrange

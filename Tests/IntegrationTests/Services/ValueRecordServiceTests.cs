@@ -1,4 +1,4 @@
-﻿using Xunit;
+using Xunit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;

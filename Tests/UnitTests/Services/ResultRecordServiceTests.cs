@@ -1,4 +1,4 @@
-﻿using Xunit;
+using Xunit;
 using Moq; // для создания фальшивых объектов (mocks) для тестирования
 using Application.Services;
 using Application.DTOs;

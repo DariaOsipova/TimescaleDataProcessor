@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic; // Коллекции (списки, словари)
 using System.Linq; // Методы для работы с коллекциями
 using Domain.Entities;

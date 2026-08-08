@@ -6,7 +6,7 @@ namespace Application.DTOs
     {
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
-        public double ExecutionTime { get; set; } //  время выполнения одной конкретной операции
+        public double ExecutionTime { get; set; } //  РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРґРЅРѕР№ РєРѕРЅРєСЂРµС‚РЅРѕР№ РѕРїРµСЂР°С†РёРё
         public double Value { get; set; }
         public string FileName { get; set; } = string.Empty;
     }

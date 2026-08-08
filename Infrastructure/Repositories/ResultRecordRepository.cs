@@ -1,5 +1,5 @@
-using System; // базовые типы(DataTime)
-using System.Collections.Generic; // IEnumerable<T>-интерфейс-коллекция объектов,их можно перебирать
+using System; // Р±Р°Р·РѕРІС‹Рµ С‚РёРїС‹(DataTime)
+using System.Collections.Generic; // IEnumerable<T>-РёРЅС‚РµСЂС„РµР№СЃ-РєРѕР»Р»РµРєС†РёСЏ РѕР±СЉРµРєС‚РѕРІ,РёС… РјРѕР¶РЅРѕ РїРµСЂРµР±РёСЂР°С‚СЊ
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,7 @@ using Infrastructure.Data;
 namespace Infrastructure.Repositories
 {
     public class ResultRecordRepository : IResultRecordRepository
-    { // реализует интерфейс IResultRecordRepository
+    { // СЂРµР°Р»РёР·СѓРµС‚ РёРЅС‚РµСЂС„РµР№СЃ IResultRecordRepository
         private readonly AppDbContext _context;
 
         public ResultRecordRepository(AppDbContext context)
@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
 
         public async Task<ResultRecord?> GetByFileNameAsync(string fileName)
         {
-            return await _context.ResultRecords.FirstOrDefaultAsync(r => r.FileName == fileName); // найти первую запись
+            return await _context.ResultRecords.FirstOrDefaultAsync(r => r.FileName == fileName); // РЅР°Р№С‚Рё РїРµСЂРІСѓСЋ Р·Р°РїРёСЃСЊ
         }
 
         public async Task AddAsync(ResultRecord result)
@@ -35,7 +35,7 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ResultRecord>> FilterAsync( // коллекция записей,которую можно перебирать
+        public async Task<IEnumerable<ResultRecord>> FilterAsync( // РєРѕР»Р»РµРєС†РёСЏ Р·Р°РїРёСЃРµР№,РєРѕС‚РѕСЂСѓСЋ РјРѕР¶РЅРѕ РїРµСЂРµР±РёСЂР°С‚СЊ
             string? fileName = null, DateTime? minDate = null, DateTime? maxDate = null,
             double? minAvgValue = null, double? maxAvgValue = null, double? minAvgExecutionTime = null,
             double? maxAvgExecutionTime = null)
@@ -43,7 +43,7 @@ namespace Infrastructure.Repositories
             var query = _context.ResultRecords.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(fileName))
-                query = query.Where(r => r.FileName.Contains(fileName)); // фильтр по имени
+                query = query.Where(r => r.FileName.Contains(fileName)); // С„РёР»СЊС‚СЂ РїРѕ РёРјРµРЅРё
 
             if (minDate.HasValue)
                 query = query.Where(r => r.MinDate >= minDate.Value);
@@ -64,7 +64,7 @@ namespace Infrastructure.Repositories
                 query = query.Where(r => r.AvgExecutionTime <= maxAvgExecutionTime.Value);
 
             return await query.OrderByDescending(r => r.ProcessedAt).ToListAsync();
-            //Descending(r => r.ProcessedAt)-сортировка по убыванию(от новых к старым) по полю ProcessedAt(дата/время обработки записи)
+            //Descending(r => r.ProcessedAt)-СЃРѕСЂС‚РёСЂРѕРІРєР° РїРѕ СѓР±С‹РІР°РЅРёСЋ(РѕС‚ РЅРѕРІС‹С… Рє СЃС‚Р°СЂС‹Рј) РїРѕ РїРѕР»СЋ ProcessedAt(РґР°С‚Р°/РІСЂРµРјСЏ РѕР±СЂР°Р±РѕС‚РєРё Р·Р°РїРёСЃРё)
         }
     }
 }

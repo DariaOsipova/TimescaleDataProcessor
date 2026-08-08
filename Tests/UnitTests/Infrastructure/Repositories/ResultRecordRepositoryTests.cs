@@ -4,7 +4,7 @@ using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using System;
-using System.Linq; // Single()-проверка кол-ва,count
+using System.Linq; // Single()-РїСЂРѕРІРµСЂРєР° РєРѕР»-РІР°,count
 using System.Threading.Tasks;
 
 namespace Tests.UnitTests.Infrastructure.Repositories
@@ -14,21 +14,21 @@ namespace Tests.UnitTests.Infrastructure.Repositories
         private AppDbContext GetDbContext()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                              .UseInMemoryDatabase(Guid.NewGuid().ToString()) // каждый тест получает свою чистую уникальную бд
+                              .UseInMemoryDatabase(Guid.NewGuid().ToString()) // РєР°Р¶РґС‹Р№ С‚РµСЃС‚ РїРѕР»СѓС‡Р°РµС‚ СЃРІРѕСЋ С‡РёСЃС‚СѓСЋ СѓРЅРёРєР°Р»СЊРЅСѓСЋ Р±Рґ
                               .Options;
             return new AppDbContext(options);
         }
 
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public async Task AddAsync_ShouldSaveResult()
         {
-            var context = GetDbContext(); // получаем объект для работы с БД
-            var repo = new ResultRecordRepository(context); // создаем репозиторий для работы с БД
-                                                            //FileName,DeltaTimeSeconds-Разница во времени в секундах,MinDate,AvgExecutionTime-среднее время выполнения,
-                                                            //DateTime.UtcNow-Самая ранняя дата в данных,MedianValue-срединное значение
+            var context = GetDbContext(); // РїРѕР»СѓС‡Р°РµРј РѕР±СЉРµРєС‚ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
+            var repo = new ResultRecordRepository(context); // СЃРѕР·РґР°РµРј СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
+                                                            //FileName,DeltaTimeSeconds-Р Р°Р·РЅРёС†Р° РІРѕ РІСЂРµРјРµРЅРё РІ СЃРµРєСѓРЅРґР°С…,MinDate,AvgExecutionTime-СЃСЂРµРґРЅРµРµ РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ,
+                                                            //DateTime.UtcNow-РЎР°РјР°СЏ СЂР°РЅРЅСЏСЏ РґР°С‚Р° РІ РґР°РЅРЅС‹С…,MedianValue-СЃСЂРµРґРёРЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
             var record = new ResultRecord("test.csv", 120, DateTime.UtcNow, 2.0, 20.0, 20.0, 30.0, 10.0);
 
-            // асинхронный значит поток не блокируется во время выполнения операции с БД
+            // Р°СЃРёРЅС…СЂРѕРЅРЅС‹Р№ Р·РЅР°С‡РёС‚ РїРѕС‚РѕРє РЅРµ Р±Р»РѕРєРёСЂСѓРµС‚СЃСЏ РІРѕ РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё СЃ Р‘Р”
             await repo.AddAsync(record);
 
             var saved = await context.ResultRecords.FirstOrDefaultAsync();
@@ -36,11 +36,11 @@ namespace Tests.UnitTests.Infrastructure.Repositories
             Assert.Equal("test.csv", saved.FileName);
         }
 
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public async Task GetByFileNameAsync_ShouldReturnCorrectRecord()
         {
-            var context = GetDbContext();// получаем объект для работы с БД
-            var repo = new ResultRecordRepository(context); // создаем репозиторий для работы с БД
+            var context = GetDbContext();// РїРѕР»СѓС‡Р°РµРј РѕР±СЉРµРєС‚ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
+            var repo = new ResultRecordRepository(context); // СЃРѕР·РґР°РµРј СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
             var record = new ResultRecord("test.csv", 120, DateTime.UtcNow, 2.0, 20.0, 20.0, 30.0, 10.0);
             await context.ResultRecords.AddAsync(record);
             await context.SaveChangesAsync();
@@ -51,21 +51,21 @@ namespace Tests.UnitTests.Infrastructure.Repositories
             Assert.Equal("test.csv", result.FileName);
         }
 
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public async Task GetByFileNameAsync_WithNonExistentFile_ShouldReturnNull()
         {
             var context = GetDbContext();
-            var repo = new ResultRecordRepository(context); // создаем репозиторий для работы с БД
+            var repo = new ResultRecordRepository(context); // СЃРѕР·РґР°РµРј СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
             var result = await repo.GetByFileNameAsync("nonexistent.csv");
 
-            Assert.Null(result); // если файл не найден
+            Assert.Null(result); // РµСЃР»Рё С„Р°Р№Р» РЅРµ РЅР°Р№РґРµРЅ
         }
 
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public async Task UpdateAsync_ShouldUpdateRecord()
-        { // сохраняем запись в бд перед обновлением
+        { // СЃРѕС…СЂР°РЅСЏРµРј Р·Р°РїРёСЃСЊ РІ Р±Рґ РїРµСЂРµРґ РѕР±РЅРѕРІР»РµРЅРёРµРј
             var context = GetDbContext();
-            var repo = new ResultRecordRepository(context); // создаем репозиторий для работы с БД
+            var repo = new ResultRecordRepository(context); // СЃРѕР·РґР°РµРј СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р‘Р”
             var record = new ResultRecord("test.csv", 120, DateTime.UtcNow, 2.0, 20.0, 20.0, 30.0, 10.0);
             await context.ResultRecords.AddAsync(record);
             await context.SaveChangesAsync();
@@ -79,7 +79,7 @@ namespace Tests.UnitTests.Infrastructure.Repositories
             Assert.Equal(180, updated.DeltaTimeSeconds);
         }
 
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public async Task FilterAsync_WithFileNameFilter_ShouldReturnFilteredResults()
         {
             var context = GetDbContext();
@@ -97,7 +97,7 @@ namespace Tests.UnitTests.Infrastructure.Repositories
             Assert.Equal("file1.csv", results.First().FileName);
         }
 
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public async Task FilterAsync_WithDateRange_ShouldReturnFilteredResults()
         {
             var context = GetDbContext();
@@ -116,10 +116,10 @@ namespace Tests.UnitTests.Infrastructure.Repositories
 
             var results = await repo.FilterAsync(minDate: date1, maxDate: date2);
 
-            Assert.Equal(2, results.Count()); // Проверяем равенство
+            Assert.Equal(2, results.Count()); // РџСЂРѕРІРµСЂСЏРµРј СЂР°РІРµРЅСЃС‚РІРѕ
         }
 
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public async Task FilterAsync_WithAvgValueRange_ShouldReturnFilteredResults()
         {
             var context = GetDbContext();

@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection; // позволяет регистрировать и получать зависимости в вашем приложении
+using Microsoft.Extensions.DependencyInjection; // позволяет регистрировать и получать зависимости в вашем приложении
 using Domain.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repositories;

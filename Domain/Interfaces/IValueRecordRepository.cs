@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic; // для <IEnumerable<ValueRecord>, коллекции, списки, словари
+using System.Collections.Generic; // РґР»СЏ <IEnumerable<ValueRecord>, РєРѕР»Р»РµРєС†РёРё, СЃРїРёСЃРєРё, СЃР»РѕРІР°СЂРё
 using System.Threading.Tasks;
 using Domain.Entities;
 
@@ -7,8 +7,8 @@ namespace Domain.Interfaces
 {
     public interface IValueRecordRepository
     {
-        Task AddRangeAsync(IEnumerable<ValueRecord> records); // множество записей за один раз
-        Task<IEnumerable<ValueRecord>> GetLast10ByFileNameAsync(string fileName); // Возвращает последние 10 записей для указанного файла
+        Task AddRangeAsync(IEnumerable<ValueRecord> records); // РјРЅРѕР¶РµСЃС‚РІРѕ Р·Р°РїРёСЃРµР№ Р·Р° РѕРґРёРЅ СЂР°Р·
+        Task<IEnumerable<ValueRecord>> GetLast10ByFileNameAsync(string fileName); // Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕСЃР»РµРґРЅРёРµ 10 Р·Р°РїРёСЃРµР№ РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ С„Р°Р№Р»Р°
         Task DeleteByFileNameAsync(string fileName);
         Task<IEnumerable<ValueRecord>> GetByFileNameAsync(string fileName);
     }

@@ -10,7 +10,7 @@ using Infrastructure.Data;
 namespace Infrastructure.Repositories
 {
     public class ValueRecordRepository : IValueRecordRepository
-    { // реализует интерфейс IValueRecordRepository
+    { // СЂРµР°Р»РёР·СѓРµС‚ РёРЅС‚РµСЂС„РµР№СЃ IValueRecordRepository
         private readonly AppDbContext _context;
 
         public ValueRecordRepository(AppDbContext context)
@@ -19,26 +19,26 @@ namespace Infrastructure.Repositories
         }
 
         public async Task AddRangeAsync(IEnumerable<ValueRecord> records)
-        { // множество записей в бд за одну операцию
-          //IEnumerable-тип параметра(Принимает любую коллекцию,которую можно перебирать),
+        { // РјРЅРѕР¶РµСЃС‚РІРѕ Р·Р°РїРёСЃРµР№ РІ Р±Рґ Р·Р° РѕРґРЅСѓ РѕРїРµСЂР°С†РёСЋ
+          //IEnumerable-С‚РёРї РїР°СЂР°РјРµС‚СЂР°(РџСЂРёРЅРёРјР°РµС‚ Р»СЋР±СѓСЋ РєРѕР»Р»РµРєС†РёСЋ,РєРѕС‚РѕСЂСѓСЋ РјРѕР¶РЅРѕ РїРµСЂРµР±РёСЂР°С‚СЊ),
             await _context.ValueRecords.AddRangeAsync(records);
             await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<ValueRecord>> GetLast10ByFileNameAsync(string fileName)
-        { // коллекция записей
+        { // РєРѕР»Р»РµРєС†РёСЏ Р·Р°РїРёСЃРµР№
             return await _context.ValueRecords.Where(v => v.FileName == fileName)
                 .OrderByDescending(v => v.Date)
                 .Take(10)
                 .ToListAsync();
-        } // последние 10 записей для указанного файла,отсортированные по дате(сначала новые)
+        } // РїРѕСЃР»РµРґРЅРёРµ 10 Р·Р°РїРёСЃРµР№ РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ С„Р°Р№Р»Р°,РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅС‹Рµ РїРѕ РґР°С‚Рµ(СЃРЅР°С‡Р°Р»Р° РЅРѕРІС‹Рµ)
 
         public async Task DeleteByFileNameAsync(string fileName)
         {
             var records = await _context.ValueRecords.Where(v => v.FileName == fileName).ToListAsync();
 
             if (records.Any())
-            { // если есть записи-удаляем их все
+            { // РµСЃР»Рё РµСЃС‚СЊ Р·Р°РїРёСЃРё-СѓРґР°Р»СЏРµРј РёС… РІСЃРµ
                 _context.ValueRecords.RemoveRange(records);
                 await _context.SaveChangesAsync();
             }

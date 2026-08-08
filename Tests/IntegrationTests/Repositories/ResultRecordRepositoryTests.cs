@@ -4,15 +4,15 @@ using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using System;
-using System.Collections.Generic; // списки, словари, множества
+using System.Collections.Generic; // СЃРїРёСЃРєРё, СЃР»РѕРІР°СЂРё, РјРЅРѕР¶РµСЃС‚РІР°
 using System.Linq; // (.First(),filtered)
 using System.Threading.Tasks;
 
 namespace Tests.IntegrationTests.Repositories
-{ // IDisposable-интерфейс, который говорит:"У этого класса есть ресурсы, которые нужно освободить после использования"
+{ // IDisposable-РёРЅС‚РµСЂС„РµР№СЃ, РєРѕС‚РѕСЂС‹Р№ РіРѕРІРѕСЂРёС‚:"РЈ СЌС‚РѕРіРѕ РєР»Р°СЃСЃР° РµСЃС‚СЊ СЂРµСЃСѓСЂСЃС‹, РєРѕС‚РѕСЂС‹Рµ РЅСѓР¶РЅРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ РїРѕСЃР»Рµ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ"
     public class ResultRecordRepositoryFilterTests : IDisposable
     {
-        private readonly AppDbContext _context; // можно изменить только в конструкторе
+        private readonly AppDbContext _context; // РјРѕР¶РЅРѕ РёР·РјРµРЅРёС‚СЊ С‚РѕР»СЊРєРѕ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ
         private readonly ResultRecordRepository _repository;
 
         public ResultRecordRepositoryFilterTests()
@@ -25,13 +25,13 @@ namespace Tests.IntegrationTests.Repositories
             _repository = new ResultRecordRepository(_context);
         }
 
-        public void Dispose() // метод очищает ресурсы после выполнения каждого теста
+        public void Dispose() // РјРµС‚РѕРґ РѕС‡РёС‰Р°РµС‚ СЂРµСЃСѓСЂСЃС‹ РїРѕСЃР»Рµ РІС‹РїРѕР»РЅРµРЅРёСЏ РєР°Р¶РґРѕРіРѕ С‚РµСЃС‚Р°
         {
             _context.Database.EnsureDeleted();
-            _context.Dispose(); // Контекст закрывается, соединения освобождаются
+            _context.Dispose(); // РљРѕРЅС‚РµРєСЃС‚ Р·Р°РєСЂС‹РІР°РµС‚СЃСЏ, СЃРѕРµРґРёРЅРµРЅРёСЏ РѕСЃРІРѕР±РѕР¶РґР°СЋС‚СЃСЏ
         }
 
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public async Task FilterAsync_ByFileName_ShouldReturnFilteredResults()
         {
             var results = new[]
@@ -45,7 +45,7 @@ namespace Tests.IntegrationTests.Repositories
 
             var filtered = await _repository.FilterAsync(
                 fileName: "file1.csv",
-                minDate: null, // фильтр отключен
+                minDate: null, // С„РёР»СЊС‚СЂ РѕС‚РєР»СЋС‡РµРЅ
                 maxDate: null,
                 minAvgValue: null,
                 maxAvgValue: null,
@@ -53,12 +53,12 @@ namespace Tests.IntegrationTests.Repositories
                 maxAvgExecutionTime: null
             );
 
-            Assert.Single(filtered); // Assert--проверка результата
-            Assert.Equal("file1.csv", filtered.First().FileName); // проверяем что значения одинаковы
+            Assert.Single(filtered); // Assert--РїСЂРѕРІРµСЂРєР° СЂРµР·СѓР»СЊС‚Р°С‚Р°
+            Assert.Equal("file1.csv", filtered.First().FileName); // РїСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ Р·РЅР°С‡РµРЅРёСЏ РѕРґРёРЅР°РєРѕРІС‹
         }
 
         [Fact]
-        public async Task FilterAsync_ByDateRange_ShouldReturnFilteredResults() // диапозон дат
+        public async Task FilterAsync_ByDateRange_ShouldReturnFilteredResults() // РґРёР°РїРѕР·РѕРЅ РґР°С‚
         {
             var baseDate = DateTime.UtcNow;
             var results = new[]
@@ -72,7 +72,7 @@ namespace Tests.IntegrationTests.Repositories
 
             var filtered = await _repository.FilterAsync(
                 fileName: null,
-                minDate: baseDate.AddDays(-7), // все записи не ранне даты(сегодня-7)
+                minDate: baseDate.AddDays(-7), // РІСЃРµ Р·Р°РїРёСЃРё РЅРµ СЂР°РЅРЅРµ РґР°С‚С‹(СЃРµРіРѕРґРЅСЏ-7)
                 maxDate: baseDate,
                 minAvgValue: null,
                 maxAvgValue: null,
@@ -80,12 +80,12 @@ namespace Tests.IntegrationTests.Repositories
                 maxAvgExecutionTime: null
             );
 
-            Assert.Equal(2, filtered.Count()); // проверяем что значения одинаковы
-            Assert.Contains(filtered, r => r.FileName == "file2.csv"); // проверка,что коллекция filtered содержит запись с именем файла "file2.csv"
+            Assert.Equal(2, filtered.Count()); // РїСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ Р·РЅР°С‡РµРЅРёСЏ РѕРґРёРЅР°РєРѕРІС‹
+            Assert.Contains(filtered, r => r.FileName == "file2.csv"); // РїСЂРѕРІРµСЂРєР°,С‡С‚Рѕ РєРѕР»Р»РµРєС†РёСЏ filtered СЃРѕРґРµСЂР¶РёС‚ Р·Р°РїРёСЃСЊ СЃ РёРјРµРЅРµРј С„Р°Р№Р»Р° "file2.csv"
             Assert.Contains(filtered, r => r.FileName == "file3.csv");
         }
 
-        [Fact] // это тест
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
         public async Task FilterAsync_ByAvgValueRange_ShouldReturnFilteredResults()
         {
             var results = new[]
@@ -108,11 +108,11 @@ namespace Tests.IntegrationTests.Repositories
                 maxAvgExecutionTime: null
             );
 
-            Assert.Single(filtered); // проверка,что коллекция filtered содержит ровно 1 элемент
-            Assert.Equal(250.5, filtered.First().AvgValue); // проверяем что значения одинаковы
+            Assert.Single(filtered); // РїСЂРѕРІРµСЂРєР°,С‡С‚Рѕ РєРѕР»Р»РµРєС†РёСЏ filtered СЃРѕРґРµСЂР¶РёС‚ СЂРѕРІРЅРѕ 1 СЌР»РµРјРµРЅС‚
+            Assert.Equal(250.5, filtered.First().AvgValue); // РїСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ Р·РЅР°С‡РµРЅРёСЏ РѕРґРёРЅР°РєРѕРІС‹
         }
 
-        [Fact]  // это тест
+        [Fact]  // СЌС‚Рѕ С‚РµСЃС‚
         public async Task FilterAsync_ByAvgExecutionTimeRange_ShouldReturnFilteredResults()
         {
             var results = new[]
@@ -134,12 +134,12 @@ namespace Tests.IntegrationTests.Repositories
                 maxAvgExecutionTime: 7.0
             );
 
-            Assert.Single(filtered); // проверка,что коллекция filtered содержит ровно 1 элемент
-            Assert.Equal(6.5, filtered.First().AvgExecutionTime); // проверяем что значения одинаковы
+            Assert.Single(filtered); // РїСЂРѕРІРµСЂРєР°,С‡С‚Рѕ РєРѕР»Р»РµРєС†РёСЏ filtered СЃРѕРґРµСЂР¶РёС‚ СЂРѕРІРЅРѕ 1 СЌР»РµРјРµРЅС‚
+            Assert.Equal(6.5, filtered.First().AvgExecutionTime); // РїСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ Р·РЅР°С‡РµРЅРёСЏ РѕРґРёРЅР°РєРѕРІС‹
         }
 
-        [Fact] // это тест
-        public async Task FilterAsync_WithAllFilters_ShouldReturnFilteredResults() // все фильтры
+        [Fact] // СЌС‚Рѕ С‚РµСЃС‚
+        public async Task FilterAsync_WithAllFilters_ShouldReturnFilteredResults() // РІСЃРµ С„РёР»СЊС‚СЂС‹
         {
             var baseDate = DateTime.UtcNow;
             var results = new[]
@@ -165,7 +165,7 @@ namespace Tests.IntegrationTests.Repositories
             Assert.Single(filtered);
             Assert.Equal("file2.csv", filtered.First().FileName);
             Assert.Equal(6.5, filtered.First().AvgExecutionTime);
-            Assert.Equal(250.5, filtered.First().AvgValue); // проверяем что значения одинаковы
+            Assert.Equal(250.5, filtered.First().AvgValue); // РїСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ Р·РЅР°С‡РµРЅРёСЏ РѕРґРёРЅР°РєРѕРІС‹
         }
     }
 }

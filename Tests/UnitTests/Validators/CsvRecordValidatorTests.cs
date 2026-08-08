@@ -1,4 +1,4 @@
-﻿using Xunit;
+using Xunit;
 using Application.Validators;
 using Domain.Exceptions;
 

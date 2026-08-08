@@ -1,4 +1,4 @@
-﻿using Xunit;
+using Xunit;
 using Moq;
 using Microsoft.AspNetCore.Http;
 using Domain.Entities;

@@ -1,4 +1,4 @@
-﻿using Xunit;
+using Xunit;
 using Application.Helpers;
 using Domain.Entities;
 using System;
